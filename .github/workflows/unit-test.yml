@@ -9,7 +9,6 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -22,9 +21,22 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
 
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
